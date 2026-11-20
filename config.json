@@ -1,0 +1,26 @@
+{
+  "moneyLevels": [
+    500,
+    1000,
+    2000,
+    3000,
+    5000,
+    10000,
+    20000,
+    30000,
+    50000,
+    100000,
+    200000,
+    300000,
+    500000,
+    750000,
+    1000000
+  ],
+  "milestones": [4, 9, 14],
+  "questionsPerGame": 15,
+  "lifelines": ["fifty", "phone", "audience"],
+  "currencySymbol": "€",
+  "currencyPosition": "after",
+  "thousandsSeparator": ".",
+  "decimalSeparator": ","
+}
