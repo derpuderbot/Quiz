@@ -7,19 +7,26 @@
 // CONFIGURATION & CONSTANTS
 // ========================================
 
-const CONFIG = {
-  // Geldstufen (klassische WW Millionär Werte)
+// Default Config (Fallback falls config.json nicht lädt)
+const DEFAULT_CONFIG = {
   MONEY_LEVELS: [
     500, 1000, 2000, 3000, 5000,
     10000, 20000, 30000, 50000, 100000,
     200000, 300000, 500000, 750000, 1000000
   ],
-  MILESTONES: [4, 9, 14], // Indizes (0-basiert) für 5000, 100000, 1000000
+  MILESTONES: [4, 9, 14],
   QUESTIONS_PER_GAME: 15,
   LIFELINES: ['fifty', 'phone', 'audience'],
+  CURRENCY_SYMBOL: '€',
+  CURRENCY_POSITION: 'after',
+  THOUSANDS_SEPARATOR: '.',
+  DECIMAL_SEPARATOR: ',',
   STORAGE_KEY: 'wwm_questions',
   SETTINGS_KEY: 'wwm_settings'
 };
+
+// Wird nach Laden von config.json befüllt
+let CONFIG = { ...DEFAULT_CONFIG };
 
 // ========================================
 // DEFAULT QUESTIONS (Beispiel-Fragen)
@@ -146,12 +153,30 @@ const els = {};
 // ========================================
 
 async function init() {
+  await loadConfig();
   cacheElements();
   createParticles();
   loadQuestions();
   buildMoneyTree();
   bindEvents();
   startNewGame();
+}
+
+async function loadConfig() {
+  try {
+    const response = await fetch('config.json');
+    if (response.ok) {
+      const userConfig = await response.json();
+      CONFIG = { ...DEFAULT_CONFIG, ...userConfig };
+      // Milestones validieren
+      if (!Array.isArray(CONFIG.MILESTONES) || CONFIG.MILESTONES.some(m => m < 0 || m >= CONFIG.MONEY_LEVELS.length)) {
+        CONFIG.MILESTONES = DEFAULT_CONFIG.MILESTONES;
+      }
+    }
+  } catch (e) {
+    console.warn('config.json nicht geladen, nutze Defaults:', e);
+    CONFIG = { ...DEFAULT_CONFIG };
+  }
 }
 
 function cacheElements() {
@@ -536,7 +561,7 @@ function endGame(won, finalAmount = null, walked = false) {
       <div class="win-icon">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
       </div>
-      <h3 class="end-title">1.000.000 €</h3>
+      <h3 class="end-title">${formatCurrency(CONFIG.MONEY_LEVELS[CONFIG.MONEY_LEVELS.length - 1])}</h3>
       <p class="end-subtitle">Sie haben alle 15 Fragen richtig beantwortet!</p>
       <div class="end-stats">
         <div class="stat">
@@ -1129,6 +1154,31 @@ function handleKeydown(e) {
 // ========================================
 // UTILITY FUNCTIONS
 // ========================================
+
+function formatCurrency(amount) {
+  const symbol = CONFIG.CURRENCY_SYMBOL || '€';
+  const position = CONFIG.CURRENCY_POSITION || 'after';
+  const thousandsSep = CONFIG.THOUSANDS_SEPARATOR || '.';
+  const decimalSep = CONFIG.DECIMAL_SEPARATOR || ',';
+
+  let formatted;
+  if (amount >= 1000000) {
+    formatted = (amount / 1000000).toFixed(1).replace('.', decimalSep) + ' Mio';
+  } else if (amount >= 1000) {
+    formatted = (amount / 1000).toFixed(1).replace('.', decimalSep) + ' Tsd';
+  } else {
+    formatted = amount.toString();
+  }
+
+  // Tausendertrennzeichen für Zahlen >= 10000 (ohne Mio/Tsd Suffix)
+  if (amount >= 10000 && amount < 1000000) {
+    const parts = formatted.split(decimalSep);
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousandsSep);
+    formatted = parts.join(decimalSep);
+  }
+
+  return position === 'before' ? `${symbol} ${formatted}` : `${formatted} ${symbol}`;
+}
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
