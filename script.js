@@ -1161,21 +1161,13 @@ function formatCurrency(amount) {
   const thousandsSep = CONFIG.THOUSANDS_SEPARATOR || '.';
   const decimalSep = CONFIG.DECIMAL_SEPARATOR || ',';
 
-  let formatted;
-  if (amount >= 1000000) {
-    formatted = (amount / 1000000).toFixed(1).replace('.', decimalSep) + ' Mio';
-  } else if (amount >= 1000) {
-    formatted = (amount / 1000).toFixed(1).replace('.', decimalSep) + ' Tsd';
-  } else {
-    formatted = amount.toString();
-  }
+  // Voll ausgeschrieben mit Tausendertrennzeichen
+  let formatted = amount.toString();
 
-  // Tausendertrennzeichen für Zahlen >= 10000 (ohne Mio/Tsd Suffix)
-  if (amount >= 10000 && amount < 1000000) {
-    const parts = formatted.split(decimalSep);
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousandsSep);
-    formatted = parts.join(decimalSep);
-  }
+  // Tausendertrennzeichen hinzufügen
+  const parts = formatted.split('.');
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousandsSep);
+  formatted = parts.join(decimalSep);
 
   return position === 'before' ? `${symbol} ${formatted}` : `${formatted} ${symbol}`;
 }
