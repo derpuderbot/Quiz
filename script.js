@@ -372,7 +372,8 @@ function loadQuestion(index) {
   // UI aktualisieren
   els.questionNumber.textContent = index + 1;
   els.questionText.textContent = state.currentQuestion.question;
-  els.questionValue.querySelector('.value-amount').textContent = formatCurrency(CONFIG.MONEY_LEVELS[index]);
+  // FIX: els.questionValue IST bereits das .value-amount Element
+  els.questionValue.textContent = formatCurrency(CONFIG.MONEY_LEVELS[index]);
 
   // Antworten rendern
   renderAnswers();
