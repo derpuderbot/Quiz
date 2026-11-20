@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Wer wird Millionär - Das interaktive Quiz-Spiel für GitHub Pages">
+    <title>Wer wird Millionär? | Quiz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Background atmosphere -->
+        <div class="bg-atmosphere">
+            <div class="bg-ring"></div>
+            <div class="bg-ring"></div>
+            <div class="bg-ring"></div>
+            <div class="particles" id="particles"></div>
+        </div>
+
+        <!-- Header with logo and money tree -->
+        <header class="game-header">
+            <div class="logo-container">
+                <svg class="logo" viewBox="0 0 400 120" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#FFD700"/>
+                            <stop offset="50%" stop-color="#FFA500"/>
+                            <stop offset="100%" stop-color="#FF8C00"/>
+                        </linearGradient>
+                        <filter id="logoGlow">
+                            <feGaussianBlur stdDeviation="4" result="blur"/>
+                            <feMerge>
+                                <feMergeNode in="blur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+                    <text x="200" y="75" text-anchor="middle" font-family="Orbitron, sans-serif" font-size="48" font-weight="900" fill="url(#logoGradient)" filter="url(#logoGlow)">WER WIRD</text>
+                    <text x="200" y="115" text-anchor="middle" font-family="Orbitron, sans-serif" font-size="32" font-weight="700" fill="#FFD700">MILLIONÄR?</text>
+                </svg>
+            </div>
+            <div class="money-tree" id="moneyTree" aria-label="Gewinnleiter" role="list"></div>
+        </header>
+
+        <!-- Main game area -->
+        <main class="game-main" role="main">
+            <!-- Question display -->
+            <section class="question-area" aria-live="polite">
+                <div class="question-frame">
+                    <div class="question-number" id="questionNumber">
+                        <span class="q-label">FRAGE</span>
+                        <span class="q-value" id="currentQuestionNum">1</span>
+                        <span class="q-separator">/</span>
+                        <span class="q-total" id="totalQuestions">15</span>
+                    </div>
+                    <div class="question-text-container">
+                        <p class="question-text" id="questionText">Lade Frage...</p>
+                    </div>
+                    <div class="question-value" id="questionValue">
+                        <span class="value-label">WERT</span>
+                        <span class="value-amount" id="currentValue">500 €</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Answer options -->
+            <section class="answers-area" aria-label="Antwortmöglichkeiten">
+                <div class="answers-grid" id="answersGrid" role="list">
+                    <!-- Answers will be injected here -->
+                </div>
+            </section>
+
+            <!-- Lifelines -->
+            <section class="lifelines-area" aria-label="Joker">
+                <div class="lifelines-container">
+                    <button class="lifeline-btn" id="lifeline50" data-lifeline="fifty" aria-pressed="false">
+                        <svg class="lifeline-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.95 2.25z"/>
+                        </svg>
+                        <span class="lifeline-label">50:50</span>
+                        <span class="lifeline-status" aria-hidden="true"></span>
+                    </button>
+                    <button class="lifeline-btn" id="lifelinePhone" data-lifeline="phone" aria-pressed="false">
+                        <svg class="lifeline-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill="currentColor" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                        </svg>
+                        <span class="lifeline-label">Telefonjoker</span>
+                        <span class="lifeline-status" aria-hidden="true"></span>
+                    </button>
+                    <button class="lifeline-btn" id="lifelineAudience" data-lifeline="audience" aria-pressed="false">
+                        <svg class="lifeline-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill="currentColor" d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                        </svg>
+                        <span class="lifeline-label">Publikumsjoker</span>
+                        <span class="lifeline-status" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Action buttons -->
+            <section class="actions-area">
+                <button class="action-btn primary" id="confirmBtn" disabled>
+                    <span class="btn-text">ANTWORT BESTÄTIGEN</span>
+                    <span class="btn-glow" aria-hidden="true"></span>
+                </button>
+                <button class="action-btn secondary" id="walkAwayBtn">
+                    <span class="btn-text">AUSSTEIGEN & GEWINN MITNEHMEN</span>
+                </button>
+            </section>
+        </main>
+
+        <!-- Modals -->
+        <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+            <div class="modal" id="modal">
+                <div class="modal-header">
+                    <h2 id="modalTitle" class="modal-title"></h2>
+                    <button class="modal-close" id="modalClose" aria-label="Schließen">&times;</button>
+                </div>
+                <div class="modal-body" id="modalBody"></div>
+                <div class="modal-footer" id="modalFooter"></div>
+            </div>
+        </div>
+
+        <!-- Audience poll results modal -->
+        <div class="modal-overlay" id="audienceModalOverlay" role="dialog" aria-modal="true" aria-labelledby="audienceModalTitle" hidden>
+            <div class="modal audience-modal" id="audienceModal">
+                <div class="modal-header">
+                    <h2 id="audienceModalTitle" class="modal-title">Publikumsjoker Ergebnis</h2>
+                </div>
+                <div class="modal-body">
+                    <div class="audience-chart" id="audienceChart" role="img" aria-label="Verteilung der Publikumsstimmen"></div>
+                </div>
+                <div class="modal-footer">
+                    <button class="action-btn primary" id="closeAudienceModal">VERSTANDEN</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phone a friend modal -->
+        <div class="modal-overlay" id="phoneModalOverlay" role="dialog" aria-modal="true" aria-labelledby="phoneModalTitle" hidden>
+            <div class="modal phone-modal" id="phoneModal">
+                <div class="modal-header">
+                    <h2 id="phoneModalTitle" class="modal-title">Telefonjoker</h2>
+                </div>
+                <div class="modal-body">
+                    <div class="phone-animation" aria-hidden="true">
+                        <svg class="phone-ringing" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                        </svg>
+                        <p class="phone-text" id="phoneText">Verbinde mit Experten...</p>
+                    </div>
+                    <div class="phone-result" id="phoneResult" hidden>
+                        <p id="phoneAdvice"></p>
+                        <p class="phone-confidence" id="phoneConfidence"></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="action-btn primary" id="closePhoneModal" hidden>VERSTANDEN</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game over / win modal -->
+        <div class="modal-overlay" id="endModalOverlay" role="dialog" aria-modal="true" aria-labelledby="endModalTitle" hidden>
+            <div class="modal end-modal" id="endModal">
+                <div class="modal-header">
+                    <h2 id="endModalTitle" class="modal-title"></h2>
+                </div>
+                <div class="modal-body" id="endModalBody"></div>
+                <div class="modal-footer">
+                    <button class="action-btn primary" id="restartBtn">NOCHMAL SPIELEN</button>
+                    <button class="action-btn secondary" id="editQuestionsBtn">FRAGEN BEARBEITEN</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question editor modal -->
+        <div class="modal-overlay" id="editorModalOverlay" role="dialog" aria-modal="true" aria-labelledby="editorModalTitle" hidden>
+            <div class="modal editor-modal" id="editorModal">
+                <div class="modal-header">
+                    <h2 id="editorModalTitle" class="modal-title">Fragen-Editor</h2>
+                    <button class="modal-close" id="editorClose" aria-label="Schließen">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="editor-tabs" role="tablist">
+                        <button class="editor-tab active" role="tab" aria-selected="true" data-tab="json">JSON Import/Export</button>
+                        <button class="editor-tab" role="tab" aria-selected="false" data-tab="visual">Visueller Editor</button>
+                    </div>
+                    <div class="editor-panels">
+                        <div class="editor-panel active" role="tabpanel" id="jsonPanel">
+                            <textarea id="jsonEditor" spellcheck="false" placeholder='{"questions": [...]}' aria-label="JSON Fragen-Editor"></textarea>
+                            <div class="editor-actions">
+                                <button class="action-btn secondary" id="validateJson">VALIDIEREN</button>
+                                <button class="action-btn primary" id="saveJson">SPEICHERN & SPIELEN</button>
+                            </div>
+                        </div>
+                        <div class="editor-panel" role="tabpanel" id="visualPanel" hidden>
+                            <div class="visual-editor" id="visualEditor"></div>
+                            <div class="editor-actions">
+                                <button class="action-btn secondary" id="addQuestion">+ FRAGE HINZUFÜGEN</button>
+                                <button class="action-btn primary" id="saveVisual">SPEICHERN & SPIELEN</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>

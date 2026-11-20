@@ -1,0 +1,94 @@
+{
+  "questions": [
+    {
+      "question": "Wie viele Bundesländer hat die Bundesrepublik Deutschland?",
+      "answers": ["14", "15", "16", "17"],
+      "correct": 2,
+      "category": "Geografie"
+    },
+    {
+      "question": "Welches Element hat das chemische Symbol 'Au'?",
+      "answers": ["Silber", "Gold", "Kupfer", "Quecksilber"],
+      "correct": 1,
+      "category": "Chemie"
+    },
+    {
+      "question": "In welchem Jahr fiel die Berliner Mauer?",
+      "answers": ["1987", "1989", "1991", "1993"],
+      "correct": 1,
+      "category": "Geschichte"
+    },
+    {
+      "question": "Wer schrieb den Roman 'Der Vorleser'?",
+      "answers": ["Günter Grass", "Bernhard Schlink", "Patrick Süskind", "Daniel Kehlmann"],
+      "correct": 1,
+      "category": "Literatur"
+    },
+    {
+      "question": "Welcher Planet ist der größte in unserem Sonnensystem?",
+      "answers": ["Saturn", "Jupiter", "Neptun", "Uranus"],
+      "correct": 1,
+      "category": "Astronomie"
+    },
+    {
+      "question": "Wie heißt der längste Fluss der Welt?",
+      "answers": ["Amazonas", "Nil", "Jangtsekiang", "Mississippi"],
+      "correct": 1,
+      "category": "Geografie"
+    },
+    {
+      "question": "Wer malte das Gemälde 'Die Sternennacht'?",
+      "answers": ["Claude Monet", "Vincent van Gogh", "Pablo Picasso", "Salvador Dalí"],
+      "correct": 1,
+      "category": "Kunst"
+    },
+    {
+      "question": "Wie viele Saiten hat eine klassische Gitarre?",
+      "answers": ["4", "5", "6", "7"],
+      "correct": 2,
+      "category": "Musik"
+    },
+    {
+      "question": "Welches Land hat die meisten Einwohner?",
+      "answers": ["Indien", "China", "USA", "Indonesien"],
+      "correct": 0,
+      "category": "Geografie"
+    },
+    {
+      "question": "Wer entwickelte die Relativitätstheorie?",
+      "answers": ["Isaac Newton", "Albert Einstein", "Stephen Hawking", "Max Planck"],
+      "correct": 1,
+      "category": "Physik"
+    },
+    {
+      "question": "Wie heißt die Hauptstadt von Australien?",
+      "answers": ["Sydney", "Melbourne", "Canberra", "Brisbane"],
+      "correct": 2,
+      "category": "Geografie"
+    },
+    {
+      "question": "Welches Tier ist das Wappentier von Bayern?",
+      "answers": ["Löwe", "Bär", "Adler", "Pferd"],
+      "correct": 0,
+      "category": "Allgemeinwissen"
+    },
+    {
+      "question": "In welchem Jahr wurde die EU gegründet (Maastricht-Vertrag)?",
+      "answers": ["1991", "1992", "1993", "1994"],
+      "correct": 1,
+      "category": "Politik"
+    },
+    {
+      "question": "Wie viele Spieler hat eine Fußballmannschaft auf dem Platz?",
+      "answers": ["10", "11", "12", "9"],
+      "correct": 1,
+      "category": "Sport"
+    },
+    {
+      "question": "Wer war der erste Bundeskanzler der BRD?",
+      "answers": ["Ludwig Erhard", "Konrad Adenauer", "Kurt Georg Kiesinger", "Willy Brandt"],
+      "correct": 1,
+      "category": "Geschichte"
+    }
+  ]
+}
