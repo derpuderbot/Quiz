@@ -164,18 +164,25 @@ async function init() {
 
 async function loadConfig() {
   try {
-    const response = await fetch('config.json');
+    const response = await fetch('config.json', { cache: 'no-cache' });
     if (response.ok) {
       const userConfig = await response.json();
       CONFIG = { ...DEFAULT_CONFIG, ...userConfig };
-      // Milestones validieren
-      if (!Array.isArray(CONFIG.MILESTONES) || CONFIG.MILESTONES.some(m => m < 0 || m >= CONFIG.MONEY_LEVELS.length)) {
-        CONFIG.MILESTONES = DEFAULT_CONFIG.MILESTONES;
-      }
+      console.log('✅ config.json geladen:', CONFIG);
+    } else {
+      throw new Error(`HTTP ${response.status}`);
     }
   } catch (e) {
-    console.warn('config.json nicht geladen, nutze Defaults:', e);
+    console.warn('⚠️ config.json nicht geladen, nutze Defaults:', e.message);
     CONFIG = { ...DEFAULT_CONFIG };
+  }
+  // Milestones validieren
+  if (!Array.isArray(CONFIG.MILESTONES) || CONFIG.MILESTONES.some(m => m < 0 || m >= CONFIG.MONEY_LEVELS.length)) {
+    CONFIG.MILESTONES = DEFAULT_CONFIG.MILESTONES;
+  }
+  // Garantieren dass MONEY_LEVELS existiert
+  if (!Array.isArray(CONFIG.MONEY_LEVELS) || CONFIG.MONEY_LEVELS.length === 0) {
+    CONFIG.MONEY_LEVELS = DEFAULT_CONFIG.MONEY_LEVELS;
   }
 }
 
