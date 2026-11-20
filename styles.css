@@ -335,37 +335,36 @@ a:focus:not(:focus-visible) {
   z-index: 10;
   flex: 1;
   padding: var(--space-3) var(--space-6) var(--space-6);
-  display: grid;
-  grid-template-columns: 1fr var(--money-tree-width);
-  grid-template-rows: auto auto auto auto;
-  gap: var(--space-4);
-  max-width: calc(var(--max-width) + var(--money-tree-width) + var(--space-6));
-  margin: 0 auto;
-  width: 100%;
-  align-content: start;
-  align-items: start;
+  display: grid !important;
+  grid-template-columns: 1fr var(--money-tree-width) !important;
+  grid-template-rows: auto auto auto auto !important;
+  gap: var(--space-4) !important;
+  max-width: calc(var(--max-width) + var(--money-tree-width) + var(--space-6)) !important;
+  margin: 0 auto !important;
+  width: 100% !important;
+  align-content: start !important;
+  align-items: start !important;
 }
 
-.question-area { grid-column: 1; grid-row: 1; }
-.answers-area { grid-column: 1; grid-row: 2; }
-.lifelines-area { grid-column: 1; grid-row: 3; }
-.actions-area { grid-column: 1; grid-row: 4; }
-.money-tree { grid-column: 2; grid-row: 1 / 5; align-self: start; }
+/* Grid-Platzierung ERZWINGEN */
+.game-main > .question-area   { grid-column: 1 !important; grid-row: 1 !important; }
+.game-main > .answers-area    { grid-column: 1 !important; grid-row: 2 !important; }
+.game-main > .lifelines-area  { grid-column: 1 !important; grid-row: 3 !important; }
+.game-main > .actions-area    { grid-column: 1 !important; grid-row: 4 !important; }
+.game-main > .money-tree      { grid-column: 2 !important; grid-row: 1 / 5 !important; align-self: start !important; }
 
 @media (max-width: 1100px) {
   .game-main {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto auto auto;
-    max-width: 700px;
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto auto auto auto auto !important;
+    max-width: 700px !important;
   }
-  .question-area { grid-column: 1; grid-row: 1; }
-  .answers-area { grid-column: 1; grid-row: 2; }
-  .lifelines-area { grid-column: 1; grid-row: 3; }
-  .actions-area { grid-column: 1; grid-row: 4; }
-  .money-tree { grid-column: 1; grid-row: 5; display: none; }
-  .game-header {
-    justify-content: center;
-  }
+  .game-main > .question-area   { grid-column: 1 !important; grid-row: 1 !important; }
+  .game-main > .answers-area    { grid-column: 1 !important; grid-row: 2 !important; }
+  .game-main > .lifelines-area  { grid-column: 1 !important; grid-row: 3 !important; }
+  .game-main > .actions-area    { grid-column: 1 !important; grid-row: 4 !important; }
+  .game-main > .money-tree      { grid-column: 1 !important; grid-row: 5 !important; display: none !important; }
+  .game-header { justify-content: center !important; }
 }
 
 /* ========================================
