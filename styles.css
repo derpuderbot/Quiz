@@ -227,11 +227,14 @@ a:focus:not(:focus-visible) {
 .logo-line {
   font-family: var(--font-display);
   font-weight: 900;
-  background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold-medium) 50%, var(--gold-dark) 100%);
+  /* Starker Gold-Gradient als Textfarbe */
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-shadow: 0 0 30px rgba(255, 215, 0, 0.6), 0 0 60px rgba(255, 165, 0, 0.4);
+  /* Kein text-shadow auf transparentem Text! */
+  filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.7))
+          drop-shadow(0 0 16px rgba(255, 165, 0, 0.5));
 }
 
 .logo-line:first-child {
@@ -243,11 +246,11 @@ a:focus:not(:focus-visible) {
   font-size: clamp(1.5rem, 4vw, 2.5rem);
   font-weight: 700;
   margin-top: -0.2em;
-  background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold-dark) 100%);
+  background: linear-gradient(135deg, #FFD700 0%, #FF8C00 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+  filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.6));
 }
 
 @media (max-width: 768px) {
