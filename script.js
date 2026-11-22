@@ -568,9 +568,7 @@ async function useFiftyFifty() {
   return eliminated;
 }
 
-  state.lifelineResults.fifty = { eliminated };
-  return eliminated; // useful for callers
-}
+
 async function usePhoneJoker() {
   showPhoneModal(); await sleep(2000 + Math.random() * 2000);
   const correct = state.currentQuestion.correct;
