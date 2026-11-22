@@ -547,14 +547,14 @@ async function useFiftyFifty() {
   const correct = state.currentQuestion.correct;
   const indices = [0, 1, 2, 3].filter(i => i !== correct);
   
-  // Fisher-Yates shuffle (unbiased)
+  // Fisher-Yates-Shuffle (unbiased)
   for (let i = indices.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [indices[i], indices[j]] = [indices[j], indices[i]];
   }
   const eliminated = indices.slice(0, 2);
 
-  // Animate sequentially and await each
+  // Sequenziell animieren und je Schritt warten
   for (const [i, idx] of eliminated.entries()) {
     await new Promise(r => setTimeout(r, i * 300));
     const btn = els.answersGrid.children[idx];
@@ -563,6 +563,10 @@ async function useFiftyFifty() {
       btn.disabled = true;
     }
   }
+
+  state.lifelineResults.fifty = { eliminated };
+  return eliminated;
+}
 
   state.lifelineResults.fifty = { eliminated };
   return eliminated; // useful for callers
