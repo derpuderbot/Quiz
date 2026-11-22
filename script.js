@@ -644,7 +644,7 @@ function bindEvents() {
   log('🔗 bindEvents()...');
   els.confirmBtn.onclick = confirmAnswer;
   els.walkAwayBtn.onclick = () => { if (state.gameStatus === 'playing') showModal('Aussteigen?', `Sicher? Sie nehmen ${formatCurrency(Math.max(state.currentQuestionIndex>0?CONFIG.MONEY_LEVELS[state.currentQuestionIndex-1]:0, state.guaranteedWinnings))} mit.`, [{text:'JA',primary:false,action:walkAway},{text:'NEIN',primary:true,action:hideModal}]); };
-  CONFIG.LIFELINES.forEach(l => { const b = document.getElementById(`lifeline${l.charAt(0).toUpperCase()+l.slice(1)}`); if (b) b.onclick = () => useLifeline(l); });
+  CONFIG.LIFELINES.forEach(l => { const b = document.getElementById(`lifeline${l.charAt(0).toUpperCase()+l.slice(1)}`); if (b) b.onclick = () => WWM.useLifeline(l); });
   els.modalClose.onclick = hideModal; els.modalOverlay.onclick = e => { if (e.target === els.modalOverlay) hideModal(); };
   document.getElementById('closeAudienceModal').onclick = hideAudienceModal; els.audienceModalOverlay.onclick = e => { if (e.target === els.audienceModalOverlay) hideAudienceModal(); };
   document.getElementById('closePhoneModal').onclick = hidePhoneModal; els.phoneModalOverlay.onclick = e => { if (e.target === els.phoneModalOverlay) hidePhoneModal(); };
