@@ -1,0 +1,49 @@
+:root {
+  /* Schriftart ändern */
+  --font-display: 'Press Start 2P', cursive;  /* Pixel-Look */
+  --font-ui: 'Inter', sans-serif;
+  
+  /* Farben: Dunkles Rot-Thema */
+  --bg-deep: #1a0000;
+  --bg-dark: #2d0a0a;
+  --bg-card: #3d0f0f;
+  --gold-bright: #ffcc00;
+  --blue-neon: #ff4444;
+  --correct-green: #00ff88;
+  --wrong-red: #ff0044;
+  
+  /* Größere Schrift */
+  --fs-base: 1.1rem;
+  --fs-xl: 1.8rem;
+  --fs-3xl: 3.5rem;
+  
+  /* Joker größer & weiter unten */
+  --lifeline-size: 80px;
+  --lifeline-gap: 20px;
+  
+  /* Antwort-Buttons höher & breiter */
+  --answer-btn-height: 90px;
+  --answer-gap: 16px;
+}
+
+/* Joker-Position: nach unten verschieben */
+.lifelines-area {
+  margin-top: 2rem;  /* mehr Abstand zur Frage */
+}
+
+/* Joker horizontal zentriert, aber weiter unten */
+.lifelines-container {
+  justify-content: center;
+  gap: var(--lifeline-gap);
+}
+
+/* Antwort-Bereich: mehr Platz */
+.answers-area {
+  padding: var(--space-lg);
+}
+
+/* Schriftfarbe für Fragetext */
+.question-text {
+  color: var(--gold-bright);
+  font-size: var(--fs-2xl);
+}
