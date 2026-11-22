@@ -545,11 +545,28 @@ async function useLifeline(lifeline) {
 
 async function useFiftyFifty() {
   const correct = state.currentQuestion.correct;
-  const wrong = [0,1,2,3].filter(i => i !== correct).sort(() => Math.random() - 0.5).slice(0, 2);
-  wrong.forEach((idx, i) => setTimeout(() => { const b = els.answersGrid.children[idx]; if (b) { b.classList.add('eliminated'); b.disabled = true; } }, i * 300));
-  state.lifelineResults.fifty = { eliminated: wrong }; await sleep(800);
-}
+  const indices = [0, 1, 2, 3].filter(i => i !== correct);
+  
+  // Fisher-Yates shuffle (unbiased)
+  for (let i = indices.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [indices[i], indices[j]] = [indices[j], indices[i]];
+  }
+  const eliminated = indices.slice(0, 2);
 
+  // Animate sequentially and await each
+  for (const [i, idx] of eliminated.entries()) {
+    await new Promise(r => setTimeout(r, i * 300));
+    const btn = els.answersGrid.children[idx];
+    if (btn) {
+      btn.classList.add('eliminated');
+      btn.disabled = true;
+    }
+  }
+
+  state.lifelineResults.fifty = { eliminated };
+  return eliminated; // useful for callers
+}
 async function usePhoneJoker() {
   showPhoneModal(); await sleep(2000 + Math.random() * 2000);
   const correct = state.currentQuestion.correct;
