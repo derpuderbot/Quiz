@@ -3,7 +3,7 @@
  * Optional - einfach löschen falls nicht gewünscht
  */
 
-const CACHE_NAME = 'wwm-quiz-v2';
+const CACHE_NAME = 'wwm-quiz-v3';
 const ASSETS = [
   './',
   './index.html',
