@@ -664,7 +664,10 @@ function bindEvents() {
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 function escapeHtml(t) { const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
 
-window.WWM = { state, CONFIG, startNewGame, showEditorModal, saveQuestions, loadQuestions, DEFAULT_QUESTIONS };
+window.WWM = { 
+  state, CONFIG, startNewGame, showEditorModal, saveQuestions, loadQuestions, DEFAULT_QUESTIONS,
+  useLifeline, useFiftyFifty, usePhoneJoker, useAudienceJoker  // ← ergänzen
+};
 
 document.addEventListener('DOMContentLoaded', init);
 if ('serviceWorker' in navigator) { window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {})); }
