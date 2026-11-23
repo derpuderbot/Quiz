@@ -175,8 +175,8 @@ body {
 }
 
 .answers-grid {
-  display: grid;
-  grid-template-columns: 1fr;
+  /* Nutzt --answer-gap aus styles.css automatisch */
+  grid-template-columns: repeat(2, minmax(280px, 1fr));
   gap: var(--answer-gap);
 }
 
