@@ -78,6 +78,11 @@
   --max-width: 1200px;
   --header-height: 140px;
   --money-tree-width: 280px;
+
+  /* Answer grid - FIXED: minmax prevents breakpoint flipping */
+  --answer-columns: 2;
+  --answer-min-width: 280px;
+  --answer-gap: var(--space-4);
 }
 
 /* --- Reset & Base --- */
@@ -227,12 +232,10 @@ a:focus:not(:focus-visible) {
 .logo-line {
   font-family: var(--font-display);
   font-weight: 900;
-  /* Starker Gold-Gradient als Textfarbe */
   background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  /* Kein text-shadow auf transparentem Text! */
   filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.7))
           drop-shadow(0 0 16px rgba(255, 165, 0, 0.5));
 }
@@ -515,7 +518,7 @@ a:focus:not(:focus-visible) {
 }
 
 /* ========================================
-   ANSWERS AREA
+   ANSWERS AREA - FIXED GRID LAYOUT
    ======================================== */
 
 .answers-area {
@@ -524,12 +527,16 @@ a:focus:not(:focus-visible) {
 
 .answers-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-4);
+  /* FIXED: minmax prevents breakpoint flipping - columns never collapse below 280px */
+  grid-template-columns: repeat(var(--answer-columns), minmax(var(--answer-min-width), 1fr));
+  gap: var(--answer-gap);
 }
 
+/* Only go to 1 column on very narrow screens */
 @media (max-width: 600px) {
-  .answers-grid { grid-template-columns: 1fr; }
+  .answers-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .answer-btn {
@@ -629,7 +636,7 @@ a:focus:not(:focus-visible) {
   height: 44px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center,
   background: linear-gradient(135deg, var(--bg-deep) 0%, var(--bg-dark) 100%);
   border: 2px solid rgba(255, 215, 0, 0.3);
   border-radius: var(--radius-full);
@@ -782,7 +789,7 @@ a:focus:not(:focus-visible) {
   position: relative;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center,
   gap: var(--space-3);
   padding: var(--space-4) var(--space-8);
   font-family: var(--font-display);
@@ -911,7 +918,7 @@ a:focus:not(:focus-visible) {
   height: 40px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center,
   background: transparent;
   border: 1px solid rgba(176, 184, 204, 0.2);
   border-radius: var(--radius-full);
@@ -1010,7 +1017,7 @@ a:focus:not(:focus-visible) {
 
 .phone-animation {
   display: flex;
-  flex-direction: column;
+  flex-direction: column,
   align-items: center;
   gap: var(--space-4);
   padding: var(--space-8) var(--space-4);
@@ -1072,7 +1079,7 @@ a:focus:not(:focus-visible) {
 
 .win-icon {
   width: 100px;
-  height: 100px;
+  height: 100px,
   margin: 0 auto var(--space-6);
   color: var(--gold-bright);
   animation: winSpin 2s ease-out;
@@ -1111,7 +1118,7 @@ a:focus:not(:focus-visible) {
 
 .stat {
   display: flex;
-  flex-direction: column;
+  flex-direction: column,
   align-items: center;
   gap: var(--space-1);
 }
@@ -1133,51 +1140,51 @@ a:focus:not(:focus-visible) {
 /* Editor Modal */
 .editor-modal {
   max-width: 800px;
-  max-height: 90vh;
-  overflow: hidden;
+  max-height: 90vh,
+  overflow: hidden,
 }
 
 .editor-tabs {
-  display: flex;
-  gap: var(--space-1);
-  padding: var(--space-3);
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: var(--radius-lg);
-  margin-bottom: var(--space-4);
+  display: flex,
+  gap: var(--space-1),
+  padding: var(--space-3),
+  background: rgba(0, 0, 0, 0.2),
+  border-radius: var(--radius-lg),
+  margin-bottom: var(--space-4),
 }
 
 .editor-tab {
-  flex: 1;
-  padding: var(--space-3) var(--space-4);
-  background: transparent;
-  border: none;
-  border-radius: var(--radius-md);
-  font-family: var(--font-display);
-  font-size: var(--fs-sm);
-  font-weight: 600;
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: all var(--transition-fast);
+  flex: 1,
+  padding: var(--space-3) var(--space-4),
+  background: transparent,
+  border: none,
+  border-radius: var(--radius-md),
+  font-family: var(--font-display),
+  font-size: var(--fs-sm),
+  font-weight: 600,
+  color: var(--text-secondary),
+  cursor: pointer,
+  transition: all var(--transition-fast),
 }
 
 .editor-tab:hover {
-  color: var(--text-primary);
-  background: rgba(255, 215, 0, 0.1);
+  color: var(--text-primary),
+  background: rgba(255, 215, 0, 0.1),
 }
 
 .editor-tab.active {
-  background: linear-gradient(135deg, var(--gold-bright), var(--gold-medium));
-  color: var(--text-on-gold);
-  box-shadow: var(--shadow-glow-gold);
+  background: linear-gradient(135deg, var(--gold-bright), var(--gold-medium)),
+  color: var(--text-on-gold),
+  box-shadow: var(--shadow-glow-gold),
 }
 
 .editor-panels {
-  max-height: 60vh;
-  overflow-y: auto;
+  max-height: 60vh,
+  overflow-y: auto,
 }
 
 .editor-panel {
-  animation: panelFade 0.2s ease;
+  animation: panelFade 0.2s ease,
 }
 
 @keyframes panelFade {
@@ -1186,146 +1193,146 @@ a:focus:not(:focus-visible) {
 }
 
 #jsonEditor {
-  width: 100%;
-  min-height: 400px;
-  padding: var(--space-4);
-  background: var(--bg-deep);
-  border: 2px solid rgba(255, 215, 0, 0.2);
-  border-radius: var(--radius-lg);
-  color: var(--text-primary);
-  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-  font-size: var(--fs-sm);
-  line-height: 1.5;
-  resize: vertical;
+  width: 100%,
+  min-height: 400px,
+  padding: var(--space-4),
+  background: var(--bg-deep),
+  border: 2px solid rgba(255, 215, 0, 0.2),
+  border-radius: var(--radius-lg),
+  color: var(--text-primary),
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace,
+  font-size: var(--fs-sm),
+  line-height: 1.5,
+  resize: vertical,
 }
 
 #jsonEditor:focus {
-  outline: none;
-  border-color: var(--gold-bright);
-  box-shadow: var(--shadow-glow-gold);
+  outline: none,
+  border-color: var(--gold-bright),
+  box-shadow: var(--shadow-glow-gold),
 }
 
 .visual-editor {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
+  display: flex,
+  flex-direction: column,
+  gap: var(--space-4),
 }
 
 .visual-question {
-  background: var(--bg-card);
-  border: 1px solid rgba(255, 215, 0, 0.15);
-  border-radius: var(--radius-lg);
-  padding: var(--space-4);
+  background: var(--bg-card),
+  border: 1px solid rgba(255, 215, 0, 0.15),
+  border-radius: var(--radius-lg),
+  padding: var(--space-4),
 }
 
 .visual-question-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--space-3);
-  padding-bottom: var(--space-3);
-  border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+  display: flex,
+  justify-content: space-between,
+  align-items: center,
+  margin-bottom: var(--space-3),
+  padding-bottom: var(--space-3),
+  border-bottom: 1px solid rgba(255, 215, 0, 0.1),
 }
 
 .visual-question-num {
-  font-family: var(--font-display);
-  font-weight: 700;
-  color: var(--gold-bright);
+  font-family: var(--font-display),
+  font-weight: 700,
+  color: var(--gold-bright),
 }
 
 .visual-question-delete {
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border: 1px solid rgba(255, 51, 102, 0.3);
-  border-radius: var(--radius-full);
-  color: var(--wrong-red);
-  cursor: pointer;
-  transition: all var(--transition-fast);
+  width: 32px,
+  height: 32px,
+  display: flex,
+  align-items: center,
+  justify-content: center,
+  background: transparent,
+  border: 1px solid rgba(255, 51, 102, 0.3),
+  border-radius: var(--radius-full),
+  color: var(--wrong-red),
+  cursor: pointer,
+  transition: all var(--transition-fast),
 }
 
 .visual-question-delete:hover {
-  background: rgba(255, 51, 102, 0.1);
-  border-color: var(--wrong-red);
+  background: rgba(255, 51, 102, 0.1),
+  border-color: var(--wrong-red),
 }
 
 .visual-question-fields {
-  display: grid;
-  gap: var(--space-3);
+  display: grid,
+  gap: var(--space-3),
 }
 
 .visual-field {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
+  display: flex,
+  flex-direction: column,
+  gap: var(--space-1),
 }
 
 .visual-field label {
-  font-size: var(--fs-xs);
-  font-weight: 600;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  font-size: var(--fs-xs),
+  font-weight: 600,
+  color: var(--text-secondary),
+  text-transform: uppercase,
+  letter-spacing: 0.05em,
 }
 
 .visual-field input,
 .visual-field select {
-  padding: var(--space-3);
-  background: var(--bg-deep);
-  border: 1px solid rgba(255, 215, 0, 0.2);
-  border-radius: var(--radius-md);
-  color: var(--text-primary);
-  font-family: var(--font-ui);
-  font-size: var(--fs-base);
-  transition: all var(--transition-fast);
+  padding: var(--space-3),
+  background: var(--bg-deep),
+  border: 1px solid rgba(255, 215, 0, 0.2),
+  border-radius: var(--radius-md),
+  color: var(--text-primary),
+  font-family: var(--font-ui),
+  font-size: var(--fs-base),
+  transition: all var(--transition-fast),
 }
 
 .visual-field input:focus,
 .visual-field select:focus {
-  outline: none;
-  border-color: var(--gold-bright);
-  box-shadow: var(--shadow-glow-gold);
+  outline: none,
+  border-color: var(--gold-bright),
+  box-shadow: var(--shadow-glow-gold),
 }
 
 .visual-field .answer-row {
-  display: flex;
-  gap: var(--space-2);
-  align-items: center;
+  display: flex,
+  gap: var(--space-2),
+  align-items: center,
 }
 
 .visual-field .answer-row input {
-  flex: 1;
+  flex: 1,
 }
 
 .visual-field .answer-row input.correct-answer {
-  border-color: var(--correct-green);
-  background: rgba(0, 255, 127, 0.05);
+  border-color: var(--correct-green),
+  background: rgba(0, 255, 127, 0.05),
 }
 
 .visual-field .correct-toggle {
-  width: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-1);
-  padding: var(--space-2);
-  background: transparent;
-  border: 1px solid rgba(0, 255, 127, 0.3);
-  border-radius: var(--radius-md);
-  color: var(--correct-green);
-  font-size: var(--fs-xs);
-  font-weight: 700;
-  cursor: pointer;
-  transition: all var(--transition-fast);
+  width: 40px,
+  display: flex,
+  align-items: center,
+  justify-content: center,
+  gap: var(--space-1),
+  padding: var(--space-2),
+  background: transparent,
+  border: 1px solid rgba(0, 255, 127, 0.3),
+  border-radius: var(--radius-md),
+  color: var(--correct-green),
+  font-size: var(--fs-xs),
+  font-weight: 700,
+  cursor: pointer,
+  transition: all var(--transition-fast),
 }
 
 .visual-field .correct-toggle.active {
-  background: var(--correct-green);
-  color: var(--text-on-gold);
-  border-color: var(--correct-green);
+  background: var(--correct-green),
+  color: var(--text-on-gold),
+  border-color: var(--correct-green),
 }
 
 /* ========================================
@@ -1333,12 +1340,12 @@ a:focus:not(:focus-visible) {
    ======================================== */
 
 .editor-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: var(--space-3);
-  margin-top: var(--space-4);
-  padding-top: var(--space-4);
-  border-top: 1px solid rgba(255, 215, 0, 0.15);
+  display: flex,
+  justify-content: flex-end,
+  gap: var(--space-3),
+  margin-top: var(--space-4),
+  padding-top: var(--space-4),
+  border-top: 1px solid rgba(255, 215, 0, 0.15),
 }
 
 /* ========================================
