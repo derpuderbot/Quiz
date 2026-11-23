@@ -1,49 +1,703 @@
+/* ========================================
+   APPLE DESIGN SYSTEM — custom.css
+   ======================================== */
+
 :root {
-  /* Schriftart ändern */
-  --font-display: 'Press Start 2P', cursive;  /* Pixel-Look */
-  --font-ui: 'Inter', sans-serif;
+  /* === FARBEN (Apple System Colors) === */
+  --bg-deep: #f5f5f7;           /* System Background */
+  --bg-dark: #ffffff;           /* Secondary Background (Cards) */
+  --bg-card: #fbfbfd;           /* Tertiary Background */
+  --bg-elevated: #ffffff;       /* Modal/Overlay Background */
   
-  /* Farben: Dunkles Rot-Thema */
-  --bg-deep: #1a0000;
-  --bg-dark: #2d0a0a;
-  --bg-card: #3d0f0f;
-  --gold-bright: #ffcc00;
-  --blue-neon: #ff4444;
-  --correct-green: #00ff88;
-  --wrong-red: #ff0044;
+  --text-primary: #1d1d1f;      /* Label (Primary Text) */
+  --text-secondary: #86868b;    /* Secondary Label */
+  --text-tertiary: #86868b;     /* Tertiary Label */
+  --text-quaternary: #a1a1a6;   /* Quaternary Label */
   
-  /* Größere Schrift */
-  --fs-base: 1.1rem;
-  --fs-xl: 1.8rem;
-  --fs-3xl: 3.5rem;
+  --blue-neon: #0071e3;         /* System Blue (Primary Action) */
+  --blue-hover: #0077ed;        /* Hover State */
+  --blue-pressed: #005bc7;      /* Pressed State */
   
-  /* Joker größer & weiter unten */
-  --lifeline-size: 80px;
-  --lifeline-gap: 20px;
+  --gold-bright: #ff9f0a;       /* System Orange (Warning/Value) */
+  --gold-dim: #cc7700;          /* Dimmed */
   
-  /* Antwort-Buttons höher & breiter */
-  --answer-btn-height: 90px;
-  --answer-gap: 16px;
+  --correct-green: #30d158;     /* System Green */
+  --wrong-red: #ff453a;         /* System Red */
+  
+  --separator: #d1d1d6;         /* Separator Lines */
+  --separator-opaque: #e5e5ea;  /* Opaque Separator */
+  
+  /* === SCHRIFT (SF Pro / Inter) === */
+  --font-display: 'SF Pro Display', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-ui: 'SF Pro Text', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'SF Mono', 'JetBrains Mono', monospace;
+  
+  /* === GRÖSSEN (Apple Type Scale) === */
+  --fs-xs: 0.6875rem;    /* 11px — Caption 2 */
+  --fs-sm: 0.75rem;      /* 12px — Caption 1 */
+  --fs-base: 0.875rem;   /* 14px — Footnote */
+  --fs-md: 1rem;         /* 16px — Body */
+  --fs-lg: 1.0625rem;    /* 17px — Callout */
+  --fs-xl: 1.25rem;      /* 20px — Subheadline */
+  --fs-2xl: 1.375rem;    /* 22px — Headline */
+  --fs-3xl: 1.75rem;     /* 28px — Title 2 */
+  --fs-4xl: 2.125rem;    /* 34px — Title 1 */
+  --fs-5xl: 3.5rem;      /* 56px — Large Title */
+  
+  /* === ABSTÄNDE (8pt Grid) === */
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  
+  /* === KOMPONENTEN === */
+  --lifeline-size: 56px;      /* 56pt Touch Target */
+  --lifeline-gap: 16px;       /* 16pt Gap */
+  --answer-btn-height: 56px;  /* 56pt Touch Target */
+  --answer-gap: 12px;         /* 12pt Gap */
+  --radius-sm: 8px;           /* Small Radius */
+  --radius-md: 12px;          /* Medium Radius (Buttons) */
+  --radius-lg: 16px;          /* Large Radius (Cards) */
+  --radius-xl: 24px;          /* XL Radius (Modals) */
+  --radius-full: 9999px;      /* Pill Shape */
+  
+  /* === SCHATTEN (Apple Elevation) === */
+  --shadow-1: 0 1px 2px rgba(0,0,0,0.04), 0 1px 1px rgba(0,0,0,0.06);   /* Level 1 */
+  --shadow-2: 0 2px 4px rgba(0,0,0,0.04), 0 4px 8px rgba(0,0,0,0.05);   /* Level 2 */
+  --shadow-3: 0 4px 8px rgba(0,0,0,0.04), 0 8px 16px rgba(0,0,0,0.05);  /* Level 3 */
+  --shadow-4: 0 8px 16px rgba(0,0,0,0.04), 0 16px 32px rgba(0,0,0,0.05);/* Level 4 */
+  --shadow-modal: 0 20px 60px rgba(0,0,0,0.15), 0 8px 20px rgba(0,0,0,0.1); /* Modal */
+  
+  /* === BLUR (Apple Glass) === */
+  --blur-light: saturate(180%) blur(20px);
+  --blur-heavy: saturate(180%) blur(40px);
+  
+  /* === TRANSITIONS === */
+  --transition-fast: 100ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Joker-Position: nach unten verschieben */
+/* ========================================
+   GLOBAL RESETS & BASE
+   ======================================== */
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  font-size: var(--fs-md);
+  line-height: 1.47059;  /* Apple line-height */
+  letter-spacing: -0.022em;
+}
+
+/* Scrollbar (Webkit) */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--separator); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-quaternary); }
+
+/* ========================================
+   LAYOUT CONTAINERS
+   ======================================== */
+
+.game-container {
+  background: var(--bg-deep);
+  min-height: 100vh;
+}
+
+/* Frage-Bereich: mehr Luft, zentriert */
+.question-area {
+  padding: var(--space-8) var(--space-6);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.question-text {
+  font-family: var(--font-display);
+  font-size: var(--fs-4xl);
+  font-weight: 600;
+  line-height: 1.22;
+  letter-spacing: -0.015em;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: var(--space-6);
+}
+
+/* Wert-Anzeige (Apple Style) */
+.value-display {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-8);
+}
+
+.value-label {
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.value-amount {
+  font-family: var(--font-display);
+  font-size: var(--fs-5xl);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ========================================
+   ANTWORT-GRID (Apple List Style)
+   ======================================== */
+
+.answers-area {
+  padding: 0 var(--space-6) var(--space-8);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.answers-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--answer-gap);
+}
+
+@media (min-width: 500px) {
+  .answers-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.answer-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  height: var(--answer-btn-height);
+  padding: 0 var(--space-5);
+  background: var(--bg-card);
+  border: 1px solid var(--separator);
+  border-radius: var(--radius-md);
+  font-family: var(--font-ui);
+  font-size: var(--fs-lg);
+  font-weight: 400;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  backdrop-filter: var(--blur-light);
+  -webkit-backdrop-filter: var(--blur-light);
+}
+
+.answer-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-md);
+  background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  pointer-events: none;
+}
+
+.answer-btn:hover {
+  background: var(--bg-elevated);
+  border-color: var(--separator-opaque);
+  box-shadow: var(--shadow-2);
+  transform: translateY(-1px);
+}
+
+.answer-btn:hover::before {
+  opacity: 1;
+}
+
+.answer-btn:active {
+  transform: translateY(0) scale(0.995);
+  box-shadow: var(--shadow-1);
+}
+
+.answer-btn:focus-visible {
+  outline: none;
+  border-color: var(--blue-neon);
+  box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.2);
+}
+
+/* Answer Letter (Apple Badge Style) */
+.answer-letter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: var(--radius-full);
+  background: var(--bg-deep);
+  border: 1px solid var(--separator);
+  font-family: var(--font-display);
+  font-size: var(--fs-base);
+  font-weight: 600;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+}
+
+.answer-btn:hover .answer-letter {
+  background: var(--blue-neon);
+  border-color: var(--blue-neon);
+  color: white;
+}
+
+.answer-btn.selected .answer-letter {
+  background: var(--blue-neon);
+  border-color: var(--blue-neon);
+  color: white;
+  box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.2);
+}
+
+.answer-btn.correct .answer-letter {
+  background: var(--correct-green);
+  border-color: var(--correct-green);
+  color: white;
+}
+
+.answer-btn.wrong .answer-letter {
+  background: var(--wrong-red);
+  border-color: var(--wrong-red);
+  color: white;
+}
+
+.answer-btn.eliminated {
+  opacity: 0.4;
+  border-color: var(--separator);
+  background: var(--bg-deep);
+  pointer-events: none;
+}
+
+.answer-btn.eliminated .answer-letter {
+  opacity: 0.4;
+  color: var(--text-quaternary);
+}
+
+.answer-text {
+  flex: 1;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* ========================================
+   JOKER / LIFELINES (Apple Toolbar Style)
+   ======================================== */
+
 .lifelines-area {
-  margin-top: 2rem;  /* mehr Abstand zur Frage */
+  padding: var(--space-4) var(--space-6) var(--space-8);
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-/* Joker horizontal zentriert, aber weiter unten */
 .lifelines-container {
+  display: flex;
   justify-content: center;
   gap: var(--lifeline-gap);
+  flex-wrap: wrap;
 }
 
-/* Antwort-Bereich: mehr Platz */
-.answers-area {
-  padding: var(--space-lg);
+.lifeline-btn {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  width: var(--lifeline-size);
+  height: var(--lifeline-size);
+  padding: var(--space-2);
+  background: var(--bg-card);
+  border: 1px solid var(--separator);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  backdrop-filter: var(--blur-light);
+  -webkit-backdrop-filter: var(--blur-light);
 }
 
-/* Schriftfarbe für Fragetext */
-.question-text {
+.lifeline-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-md);
+  background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  pointer-events: none;
+}
+
+.lifeline-btn:hover {
+  background: var(--bg-elevated);
+  border-color: var(--separator-opaque);
+  box-shadow: var(--shadow-2);
+  transform: translateY(-2px);
+}
+
+.lifeline-btn:hover::before {
+  opacity: 1;
+}
+
+.lifeline-btn:active {
+  transform: translateY(0) scale(0.95);
+}
+
+.lifeline-btn:focus-visible {
+  outline: none;
+  border-color: var(--blue-neon);
+  box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.2);
+}
+
+.lifeline-btn[aria-pressed="true"],
+.lifeline-btn.used {
+  background: var(--bg-deep);
+  border-color: var(--separator);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.lifeline-btn[aria-pressed="true"] .lifeline-icon,
+.lifeline-btn.used .lifeline-icon {
+  opacity: 0.5;
+}
+
+.lifeline-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--text-secondary);
+  transition: color var(--transition-fast);
+}
+
+.lifeline-btn:hover .lifeline-icon {
+  color: var(--blue-neon);
+}
+
+.lifeline-label {
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.lifeline-status {
+  display: none;  /* Apple zeigt Status nicht als Text */
+}
+
+/* ========================================
+   GELD-BAUM (Money Tree) — Apple Sidebar
+   ======================================== */
+
+.money-tree {
+  background: var(--bg-card);
+  border: 1px solid var(--separator);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  backdrop-filter: var(--blur-light);
+  -webkit-backdrop-filter: var(--blur-light);
+}
+
+.money-tree-level {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
+  font-weight: 400;
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+}
+
+.money-tree-level:hover {
+  background: var(--bg-deep);
+}
+
+.money-tree-level.current {
+  background: var(--blue-neon);
+  color: white;
+  font-weight: 600;
+  box-shadow: var(--shadow-2);
+}
+
+.money-tree-level.milestone {
+  font-weight: 600;
   color: var(--gold-bright);
+}
+
+.money-tree-level.milestone.current {
+  background: var(--gold-bright);
+  color: white;
+}
+
+/* ========================================
+   MODALS (Apple Sheet Style)
+   ======================================== */
+
+.modal-overlay {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: var(--blur-heavy);
+  -webkit-backdrop-filter: var(--blur-heavy);
+}
+
+.modal {
+  background: var(--bg-elevated);
+  border: 1px solid var(--separator);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-modal);
+  padding: var(--space-6);
+  max-width: 400px;
+  width: 90%;
+}
+
+.modal-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-3xl);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--space-3);
+}
+
+.modal-body {
+  font-size: var(--fs-md);
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: var(--space-6);
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-5);
+  font-family: var(--font-ui);
+  font-size: var(--fs-base);
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-primary {
+  background: var(--blue-neon);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--blue-hover);
+}
+
+.btn-primary:active {
+  background: var(--blue-pressed);
+}
+
+.btn-secondary {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--separator);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-deep);
+  border-color: var(--separator-opaque);
+}
+
+/* ========================================
+   AUDIENCE CHART (Apple Bar Chart)
+   ======================================== */
+
+.audience-chart {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+}
+
+.audience-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  height: 28px;
+}
+
+.audience-bar-label {
+  width: 32px;
+  font-family: var(--font-display);
+  font-size: var(--fs-base);
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.audience-bar-track {
+  flex: 1;
+  height: 8px;
+  background: var(--bg-deep);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.audience-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg, var(--blue-neon), #5e9fff);
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.audience-bar-value {
+  width: 48px;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--text-tertiary);
+}
+
+/* ========================================
+   PHONE JOKER
+   ======================================== */
+
+.phone-modal .phone-text {
+  font-size: var(--fs-lg);
+  color: var(--text-secondary);
+  text-align: center;
+  line-height: 1.6;
+}
+
+.phone-modal .phone-advice {
+  font-family: var(--font-display);
   font-size: var(--fs-2xl);
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: center;
+  margin: var(--space-6) 0;
+}
+
+.phone-modal .phone-confidence {
+  font-size: var(--fs-base);
+  color: var(--text-tertiary);
+  text-align: center;
+}
+
+/* ========================================
+   ANIMATIONS (Apple Feel)
+   ======================================== */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.question-text {
+  animation: slideUp var(--transition-slow) var(--transition-base);
+}
+
+.answer-btn {
+  animation: fadeIn var(--transition-base) both;
+}
+
+.answer-btn:nth-child(1) { animation-delay: 50ms; }
+.answer-btn:nth-child(2) { animation-delay: 100ms; }
+.answer-btn:nth-child(3) { animation-delay: 150ms; }
+.answer-btn:nth-child(4) { animation-delay: 200ms; }
+
+.lifeline-btn {
+  animation: scaleIn var(--transition-base) both;
+}
+
+.lifeline-btn:nth-child(1) { animation-delay: 100ms; }
+.lifeline-btn:nth-child(2) { animation-delay: 150ms; }
+.lifeline-btn:nth-child(3) { animation-delay: 200ms; }
+
+.modal-overlay {
+  animation: fadeIn var(--transition-fast);
+}
+
+.modal {
+  animation: scaleIn var(--transition-base);
+}
+
+/* ========================================
+   DARK MODE SUPPORT (Apple Auto)
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-deep: #000000;
+    --bg-dark: #1d1d1f;
+    --bg-card: #1d1d1f;
+    --bg-elevated: #2c2c2e;
+    
+    --text-primary: #f5f5f7;
+    --text-secondary: #a1a1a6;
+    --text-tertiary: #86868b;
+    --text-quaternary: #6e6e73;
+    
+    --separator: #3a3a3c;
+    --separator-opaque: #48484a;
+    
+    --shadow-1: 0 1px 2px rgba(0,0,0,0.3), 0 1px 1px rgba(0,0,0,0.4);
+    --shadow-2: 0 2px 4px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.4);
+    --shadow-3: 0 4px 8px rgba(0,0,0,0.3), 0 8px 16px rgba(0,0,0,0.4);
+    --shadow-4: 0 8px 16px rgba(0,0,0,0.3), 0 16px 32px rgba(0,0,0,0.4);
+    --shadow-modal: 0 20px 60px rgba(0,0,0,0.6), 0 8px 20px rgba(0,0,0,0.5);
+  }
+  
+  .answer-btn,
+  .lifeline-btn {
+    background: var(--bg-card);
+  }
+  
+  .answer-btn:hover,
+  .lifeline-btn:hover {
+    background: var(--bg-elevated);
+  }
+  
+  .money-tree {
+    background: var(--bg-card);
+    border-color: var(--separator);
+  }
 }
