@@ -3,6 +3,7 @@
    ======================================== */
 
 /* --- CSS Custom Properties (Design Tokens) --- */
+:root {
   /* Core Palette - Deep midnight blue with gold accents */
   --bg-deep: #030712;
   --bg-dark: #0a1226;
